@@ -25,13 +25,13 @@ public class ReadingController {
         Map<String, String> parameters = commandParser.getParameters();
 
         switch(route){
-            case "get/clients":
+            case "/get/clients":
                 if(parameters.containsKey("id")) return getClientById(Long.parseLong(parameters.get("id"))).toString();
                 else return getClients().toString();
-            case "get/products":
+            case "/get/products":
                 if(parameters.containsKey("id")) return getProductById(Long.parseLong(parameters.get("id"))).toString();
                 else return getProducts().toString();
-            case "get/factures":
+            case "/get/factures":
                 if(parameters.containsKey("id")) return getFactureById(Long.parseLong(parameters.get("id"))).toString();
                 else return getFactures().toString();
             default:

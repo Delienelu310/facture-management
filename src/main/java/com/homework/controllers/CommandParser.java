@@ -13,7 +13,7 @@ public class CommandParser{
 
     //the typical command looks smth like this: /put/element/add?factureId=5;productId=3;quantity=10
     public void parse(String command){
-        String[] routeAndParams = command.split("?");
+        String[] routeAndParams = command.split(":");
         route = routeAndParams[0];
 
         parameters = new HashMap<>();

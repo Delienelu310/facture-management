@@ -18,19 +18,23 @@ public class ConsoleInterface {
 
 
     private void printWelcomeMessage(){
-
+        System.out.println("Welcome to the facture management application. It allows you create factures and manage them. Use /help for more info");
     }
 
     private void printHelpMessage(){
-
+        System.out.println("Helping message to be implemented");
     }
 
     private void printException(Exception exception){
-
+        System.out.println(exception);
+        for(StackTraceElement st : exception.getStackTrace()){
+            System.out.println(st.toString());
+        }
+       
     }
 
     private void printExitMessage(){
-
+        System.out.println("The app finished working");
     }
     
     public void launch(){
@@ -51,7 +55,7 @@ public class ConsoleInterface {
                         printExitMessage();
                         return;
                     default:
-                        if(commandLine.startsWith("get")){
+                        if(commandLine.startsWith("/get")){
                             String response = readingController.execute(commandLine);
                             System.out.println(response);
                         }else{
