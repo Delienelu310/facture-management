@@ -3,6 +3,7 @@ package com.homework.repository;
 import java.util.ArrayList;
 
 import com.homework.resources.Client;
+import com.homework.resources.Element;
 import com.homework.resources.Facture;
 import com.homework.resources.Product;
 
@@ -11,6 +12,8 @@ public class RuntimeDatabase implements DatabaseInterface{
     private ArrayList<Client> clients = new ArrayList<>();
     private ArrayList<Product> products = new ArrayList<>();
     private ArrayList<Facture> factures = new ArrayList<>();
+
+    private Long clientsCounter = 0l, productsCounter = 0l, facturesCounter = 0l;
 
 
     public Client retrieveClientById(Long id){
@@ -28,7 +31,8 @@ public class RuntimeDatabase implements DatabaseInterface{
     }
 
     public void createClient(Client clientData){
-        
+        clientData.setId(++clientsCounter);
+        clients.add(clientData);
     }
 
     public void deleteClient(Long id){
@@ -62,7 +66,8 @@ public class RuntimeDatabase implements DatabaseInterface{
         throw new RuntimeException();
     }
     public void createProduct(Product productData){
-
+        productData.setId(++productsCounter);
+        products.add(productData);
     }
 
     public Facture retrieveFactureById(Long id){
@@ -96,19 +101,101 @@ public class RuntimeDatabase implements DatabaseInterface{
         throw new RuntimeException();
     }
     public void openFactureForClient(Long clientId){
+        Client client = null;
+        for(Client cl : clients){
+            if(cl.getId() == clientId){
+                client = cl;
+                break;
+            }
+        }
+        if(client == null) throw new RuntimeException();
 
+        Facture facture = Facture.builder()
+            .client(client)
+            .id(++facturesCounter)
+            .build();
+        factures.add(facture);
     }
 
     public void closeFacture(Long id){
+        Facture facture = null;
 
+        for(Facture fc : factures){
+            if(fc.getId() == id){
+                facture = fc;
+                break;
+            }
+        }
+        if(facture == null) throw new RuntimeException();
+
+        facture.setOpened(false);
     }
 
     public void addElement(Long factureId, Long productId, int quantity){
+        Facture facture = null;
 
+        for(Facture fc : factures){
+            if(fc.getId() == factureId){
+                facture = fc;
+                break;
+            }
+        }
+        if(facture == null) throw new RuntimeException();
+
+        Product product = null;
+
+        for(Product pc : products){
+            if(pc.getId() == productId){
+                product = pc;
+                break;
+            }
+        }
+        if(product == null) throw new RuntimeException();
+
+        if(quantity < 1) throw new RuntimeException();
+
+        Element element = Element.builder()
+            .product(product)
+            .quantity(quantity)
+            .build();
+        
+        for(Element el : facture.getElements()){
+            if(el.getProduct().getId() == element.getProduct().getId()){
+                facture.getElements().remove(el);
+                break;
+            }
+        }
+        facture.getElements().add(element);
     }
 
     public void removeElement(Long factureId, Long productId){
+        Facture facture = null;
 
+        for(Facture fc : factures){
+            if(fc.getId() == factureId){
+                facture = fc;
+                break;
+            }
+        }
+        if(facture == null) throw new RuntimeException();
+
+        Product product = null;
+
+        for(Product pc : products){
+            if(pc.getId() == productId){
+                product = pc;
+                break;
+            }
+        }
+        if(product == null) throw new RuntimeException();
+
+        for(Element el : facture.getElements()){
+            if(el.getProduct().getId() == productId){
+                facture.getElements().remove(el);
+                return;
+            }
+        }
+        throw new RuntimeException();
     }
     
 }
