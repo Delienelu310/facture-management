@@ -73,9 +73,19 @@ public class RuntimeDatabase implements DatabaseInterface{
         }
         throw new RuntimeException();
     }
+
+    public ArrayList<Facture> retrieveFacturesForClient(Long clientId){
+        ArrayList<Facture> result = new ArrayList<>();
+        for(Facture facture : factures){
+            if(facture.getClient().getId() == clientId) result.add(facture);
+        }   
+        return result;
+    }
+
     public ArrayList<Facture> retrieveFactures(){
         return factures;
     }
+
     public void deleteFacturebyId(Long id){
         for(Facture facture : factures){
             if(facture.getId() == id){

@@ -20,6 +20,7 @@ public interface DatabaseInterface {
     public void createProduct(Product productData);
 
     public Facture retrieveFactureById(Long id);
+    public ArrayList<Facture> retrieveFacturesForClient(Long clientId);
     public ArrayList<Facture> retrieveFactures();
     public void deleteFacturebyId(Long id);
     public void openFactureForClient(Long clientId);

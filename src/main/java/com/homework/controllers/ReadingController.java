@@ -1,6 +1,7 @@
 package com.homework.controllers;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import com.homework.repository.DatabaseInterface;
 import com.homework.resources.Client;
@@ -17,36 +18,53 @@ public class ReadingController {
         this.database = database;
     }
 
-    public String execute(String string){
-        return null;
+    public String execute(String command){
+
+        commandParser.parse(command);
+        String route = commandParser.getRoute();
+        Map<String, String> parameters = commandParser.getParameters();
+
+        switch(route){
+            case "get/clients":
+                if(parameters.containsKey("id")) return getClientById(Long.parseLong(parameters.get("id"))).toString();
+                else return getClients().toString();
+            case "get/products":
+                if(parameters.containsKey("id")) return getProductById(Long.parseLong(parameters.get("id"))).toString();
+                else return getProducts().toString();
+            case "get/factures":
+                if(parameters.containsKey("id")) return getFactureById(Long.parseLong(parameters.get("id"))).toString();
+                else return getFactures().toString();
+            default:
+                throw new RuntimeException();
+        }
     }
 
     public Client getClientById(Long id){
-        return null;
+        return database.retrieveClientById(id);
     }
 
     public ArrayList<Client> getClients(){
-        return null;
+        return database.retrieveClients();
     }
 
     public Product getProductById(Long id){
-        return null;
+        return database.retrieveProductById(id);
     }
 
     public ArrayList<Product> getProducts(){
-        return null;
+        return database.retreiveProducts();
     }
 
     public Facture getFactureById(Long id){
-        return null;     
+        return database.retrieveFactureById(id);     
     }
 
     public ArrayList<Facture> getFactures(){
-        return null;
+        return database.retrieveFactures();
     }
 
     public ArrayList<Facture> getFacturesForClient(Long clientId){
-        return null;
+        return database.retrieveFacturesForClient(clientId);
     }
     
 
