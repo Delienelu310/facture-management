@@ -40,35 +40,36 @@ public class ConsoleInterface {
     public void launch(){
 
         printWelcomeMessage();
-        
-        Scanner scanner = new Scanner(System.in);
-        String commandLine = null;
-        do{
-            commandLine = scanner.nextLine();
-            try{
-                switch(commandLine){
-                    case "/help":
-                        printHelpMessage();
+        try(Scanner scanner = new Scanner(System.in);){
+            String commandLine = null;
+            do{
+                commandLine = scanner.nextLine();
+                try{
+                    switch(commandLine){
+                        case "/help":
+                            printHelpMessage();
+                            break;
+                        case "/exit":
+                            printExitMessage();
+                            return;
+                        default:
+                            if(commandLine.startsWith("/get")){
+                                String response = readingController.execute(commandLine);
+                                System.out.println(response);
+                            }else{
+                                serviceProviderController.execute(commandLine);
+                                System.out.println("The operation was successfull");
+                            }
                         break;
-                    case "/exit":
-                        scanner.close();
-                        printExitMessage();
-                        return;
-                    default:
-                        if(commandLine.startsWith("/get")){
-                            String response = readingController.execute(commandLine);
-                            System.out.println(response);
-                        }else{
-                            serviceProviderController.execute(commandLine);
-                            System.out.println("The operation was successfull");
-                        }
-                    break;
+                    }
+                }catch(Exception e){
+                    printException(e);
                 }
-            }catch(Exception e){
-                printException(e);
-            }
-            
-        }while(true);
+                
+            }while(true);
+        }
+        
+        
 
         
     }

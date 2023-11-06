@@ -1,6 +1,6 @@
 package com.homework.repository;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import com.homework.resources.Client;
 import com.homework.resources.Facture;
@@ -10,18 +10,18 @@ public interface DatabaseInterface {
     
 
     public Client retrieveClientById(Long id);
-    public ArrayList<Client> retrieveClients();
+    public List<Client> retrieveClients();
     public void createClient(Client clientData);
     public void deleteClient(Long id);
 
-    public ArrayList<Product> retreiveProducts();
+    public List<Product> retreiveProducts();
     public Product retrieveProductById(Long id);
     public void deleteProductById(Long id);
     public void createProduct(Product productData);
 
     public Facture retrieveFactureById(Long id);
-    public ArrayList<Facture> retrieveFacturesForClient(Long clientId);
-    public ArrayList<Facture> retrieveFactures();
+    public List<Facture> retrieveFacturesForClient(Long clientId);
+    public List<Facture> retrieveFactures();
     public void deleteFacturebyId(Long id);
     public void openFactureForClient(Long clientId);
     public void closeFacture(Long id);

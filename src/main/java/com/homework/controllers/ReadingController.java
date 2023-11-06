@@ -1,6 +1,6 @@
 package com.homework.controllers;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import com.homework.repository.DatabaseInterface;
@@ -26,14 +26,23 @@ public class ReadingController {
 
         switch(route){
             case "/get/clients":
-                if(parameters.containsKey("id")) return getClientById(Long.parseLong(parameters.get("id"))).toString();
-                else return getClients().toString();
+                if(parameters.containsKey("id")) {
+                    return getClientById(Long.parseLong(parameters.get("id"))).toString();
+                }else {
+                    return getClients().toString();
+                }
             case "/get/products":
-                if(parameters.containsKey("id")) return getProductById(Long.parseLong(parameters.get("id"))).toString();
-                else return getProducts().toString();
+                if(parameters.containsKey("id")){
+                    return getProductById(Long.parseLong(parameters.get("id"))).toString();
+                }else{
+                    return getProducts().toString();
+                } 
             case "/get/factures":
-                if(parameters.containsKey("id")) return getFactureById(Long.parseLong(parameters.get("id"))).toString();
-                else return getFactures().toString();
+                if(parameters.containsKey("id")){
+                    return getFactureById(Long.parseLong(parameters.get("id"))).toString();
+                }else{
+                    return getFactures().toString();
+                } 
             default:
                 throw new RuntimeException();
         }
@@ -43,7 +52,7 @@ public class ReadingController {
         return database.retrieveClientById(id);
     }
 
-    public ArrayList<Client> getClients(){
+    public List<Client> getClients(){
         return database.retrieveClients();
     }
 
@@ -51,7 +60,7 @@ public class ReadingController {
         return database.retrieveProductById(id);
     }
 
-    public ArrayList<Product> getProducts(){
+    public List<Product> getProducts(){
         return database.retreiveProducts();
     }
 
@@ -59,11 +68,11 @@ public class ReadingController {
         return database.retrieveFactureById(id);     
     }
 
-    public ArrayList<Facture> getFactures(){
+    public List<Facture> getFactures(){
         return database.retrieveFactures();
     }
 
-    public ArrayList<Facture> getFacturesForClient(Long clientId){
+    public List<Facture> getFacturesForClient(Long clientId){
         return database.retrieveFacturesForClient(clientId);
     }
     

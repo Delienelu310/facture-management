@@ -17,7 +17,9 @@ public class CommandParser{
         route = routeAndParams[0];
 
         parameters = new HashMap<>();
-        if(routeAndParams.length == 1) return;
+        if(routeAndParams.length == 1){
+            return;
+        } 
 
         String[] paramsPairs = routeAndParams[1].split(";");
         for(String pair : paramsPairs){

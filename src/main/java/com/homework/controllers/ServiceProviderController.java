@@ -22,25 +22,37 @@ public class ServiceProviderController {
 
         switch(route){
             case "/delete/client":
-                if(!parameters.containsKey("id")) throw new RuntimeException();
+                if(!parameters.containsKey("id")){
+                    throw new RuntimeException();
+                } 
                 deleteClientById(Long.parseLong(parameters.get("id")));
                 return null;
             case "/delete/product":
-                if(!parameters.containsKey("id")) throw new RuntimeException();
+                if(!parameters.containsKey("id")){
+                    throw new RuntimeException();
+                } 
                 deleteProductById(Long.parseLong(parameters.get("id")));
                 return null;
             case "/delete/facture":
-                if(!parameters.containsKey("id")) throw new RuntimeException();
+                if(!parameters.containsKey("id")){
+                    throw new RuntimeException();
+                } 
                 deleteFactureById(Long.parseLong(parameters.get("id")));
                 return null;
             case "/put/client":
-                if(!parameters.containsKey("username")) throw new RuntimeException();
+                if(!parameters.containsKey("username")){
+                    throw new RuntimeException();
+                } 
                 Client client = Client.builder().username(parameters.get("username")).build();
                 addClient(client);
                 return null;
             case "/put/product":
-                if(!parameters.containsKey("title")) throw new RuntimeException();
-                if(!parameters.containsKey("price")) throw new RuntimeException();
+                if(!parameters.containsKey("title")){
+                    throw new RuntimeException();
+                }
+                if(!parameters.containsKey("price")){
+                    throw new RuntimeException();
+                }
                 Product product = Product.builder()
                     .title(parameters.get("title"))
                     .price(Integer.parseInt(parameters.get("price")))
@@ -48,25 +60,39 @@ public class ServiceProviderController {
                 addProduct(product);
                 return null;
             case "put/facture/open":
-                if(!parameters.containsKey("clientId")) throw new RuntimeException();
+                if(!parameters.containsKey("clientId")){
+                    throw new RuntimeException();
+                } 
                 openFactureForClient(Long.parseLong(parameters.get("clientId")));
                 return null;
             case "put/facture/close":
-                if(!parameters.containsKey("factureId")) throw new RuntimeException();
+                if(!parameters.containsKey("factureId")){
+                    throw new RuntimeException();
+                } 
                 closeFacture(Long.parseLong(parameters.get("factureId")));
                 return null;
             case "put/element/add":
-                if(!parameters.containsKey("factureId")) throw new RuntimeException();
-                if(!parameters.containsKey("productId")) throw new RuntimeException();
-                if(!parameters.containsKey("quantity")) throw new RuntimeException();
+                if(!parameters.containsKey("factureId")){
+                    throw new RuntimeException();
+                } 
+                if(!parameters.containsKey("productId")){
+                    throw new RuntimeException();
+                } 
+                if(!parameters.containsKey("quantity")){
+                    throw new RuntimeException();
+                } 
                 addElement(
                     Long.parseLong(parameters.get("factureId")), 
                     Long.parseLong(parameters.get("productId")), 
                     Integer.parseInt(parameters.get("quantity")));
                 return null;
             case "put/element/remove":
-                if(!parameters.containsKey("factureId")) throw new RuntimeException();
-                if(!parameters.containsKey("productId")) throw new RuntimeException();
+                if(!parameters.containsKey("factureId")){
+                    throw new RuntimeException();
+                } 
+                if(!parameters.containsKey("productId")){
+                    throw new RuntimeException();
+                } 
                 removeElement(
                     Long.parseLong(parameters.get("factureId")), 
                     Long.parseLong(parameters.get("productId"))
@@ -106,17 +132,23 @@ public class ServiceProviderController {
     }
 
     public void addElement(Long factureId, Long productId, int quantity){
-        if(quantity < 1) throw new RuntimeException();
+        if(quantity < 1){
+            throw new RuntimeException();
+        } 
 
         Facture facture = database.retrieveFactureById(factureId);
-        if(!facture.getOpened()) throw new RuntimeException();
+        if(!facture.getOpened()){
+            throw new RuntimeException();
+        } 
 
         database.addElement(factureId, productId, quantity);
     }
 
     public void removeElement(Long factureId, Long productId){
         Facture facture = database.retrieveFactureById(factureId);
-        if(!facture.getOpened()) throw new RuntimeException();
+        if(!facture.getOpened()) {
+            throw new RuntimeException();
+        }
 
         database.removeElement(factureId, productId);
     }
