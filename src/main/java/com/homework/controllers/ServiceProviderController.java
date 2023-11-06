@@ -59,19 +59,19 @@ public class ServiceProviderController {
                     .build();
                 addProduct(product);
                 return null;
-            case "put/facture/open":
+            case "/put/facture/open":
                 if(!parameters.containsKey("clientId")){
                     throw new RuntimeException();
                 } 
                 openFactureForClient(Long.parseLong(parameters.get("clientId")));
                 return null;
-            case "put/facture/close":
+            case "/put/facture/close":
                 if(!parameters.containsKey("factureId")){
                     throw new RuntimeException();
                 } 
                 closeFacture(Long.parseLong(parameters.get("factureId")));
                 return null;
-            case "put/element/add":
+            case "/put/element/add":
                 if(!parameters.containsKey("factureId")){
                     throw new RuntimeException();
                 } 
@@ -86,7 +86,7 @@ public class ServiceProviderController {
                     Long.parseLong(parameters.get("productId")), 
                     Integer.parseInt(parameters.get("quantity")));
                 return null;
-            case "put/element/remove":
+            case "/put/element/remove":
                 if(!parameters.containsKey("factureId")){
                     throw new RuntimeException();
                 } 
