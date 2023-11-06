@@ -142,6 +142,8 @@ public class RuntimeDatabase implements DatabaseInterface{
         }
         if(facture == null) throw new RuntimeException();
 
+        if(!facture.getOpened()) throw new RuntimeException();
+
         Product product = null;
 
         for(Product pc : products){
@@ -178,6 +180,8 @@ public class RuntimeDatabase implements DatabaseInterface{
             }
         }
         if(facture == null) throw new RuntimeException();
+
+        if(!facture.getOpened()) throw new RuntimeException();
 
         Product product = null;
 
